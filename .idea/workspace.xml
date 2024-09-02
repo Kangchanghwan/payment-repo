@@ -1,0 +1,605 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="3b561aca-9e0f-4fcc-9ec6-385ac67ed2e2" name="Changes" comment="feat: Wallet Service 동시성 제어">
+      <change afterPath="$PROJECT_DIR$/ledgerservice/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ledgerservice/build.gradle.kts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ledgerservice/gradle/wrapper/gradle-wrapper.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ledgerservice/gradle/wrapper/gradle-wrapper.properties" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ledgerservice/gradlew" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ledgerservice/gradlew.bat" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ledgerservice/settings.gradle.kts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ledgerservice/src/main/kotlin/org/example/ledgerservice/LedgerserviceApplication.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ledgerservice/src/main/kotlin/org/example/ledgerservice/common/IdempotencyCreator.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ledgerservice/src/main/kotlin/org/example/ledgerservice/common/PersistenceAdapter.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ledgerservice/src/main/kotlin/org/example/ledgerservice/common/StreamAdapter.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ledgerservice/src/main/kotlin/org/example/ledgerservice/common/UseCase.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ledgerservice/src/main/kotlin/org/example/ledgerservice/ledger/adapter/in/stream/PaymentEventMessageHandler.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ledgerservice/src/main/kotlin/org/example/ledgerservice/ledger/adapter/out/persistence/AccountPersistAdapter.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ledgerservice/src/main/kotlin/org/example/ledgerservice/ledger/adapter/out/persistence/LedgerPersistenceAdapter.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ledgerservice/src/main/kotlin/org/example/ledgerservice/ledger/adapter/out/persistence/PaymentOrderPersistenceAdapter.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ledgerservice/src/main/kotlin/org/example/ledgerservice/ledger/adapter/out/persistence/entity/JpaAccountEntity.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ledgerservice/src/main/kotlin/org/example/ledgerservice/ledger/adapter/out/persistence/entity/JpaAccountMapper.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ledgerservice/src/main/kotlin/org/example/ledgerservice/ledger/adapter/out/persistence/entity/JpaLedgerEntryEntity.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ledgerservice/src/main/kotlin/org/example/ledgerservice/ledger/adapter/out/persistence/entity/JpaLedgerEntryMapper.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ledgerservice/src/main/kotlin/org/example/ledgerservice/ledger/adapter/out/persistence/entity/JpaLedgerTransactionEntity.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ledgerservice/src/main/kotlin/org/example/ledgerservice/ledger/adapter/out/persistence/entity/JpaLedgerTransactionMapper.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ledgerservice/src/main/kotlin/org/example/ledgerservice/ledger/adapter/out/persistence/entity/JpaPaymentOrderEntity.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ledgerservice/src/main/kotlin/org/example/ledgerservice/ledger/adapter/out/persistence/entity/JpaPaymentOrderMapper.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ledgerservice/src/main/kotlin/org/example/ledgerservice/ledger/adapter/out/persistence/repository/AccountRepository.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ledgerservice/src/main/kotlin/org/example/ledgerservice/ledger/adapter/out/persistence/repository/JpaAccountRepository.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ledgerservice/src/main/kotlin/org/example/ledgerservice/ledger/adapter/out/persistence/repository/JpaLedgerEntryRepository.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ledgerservice/src/main/kotlin/org/example/ledgerservice/ledger/adapter/out/persistence/repository/JpaLedgerTransactionRepository.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ledgerservice/src/main/kotlin/org/example/ledgerservice/ledger/adapter/out/persistence/repository/JpaPaymentOrderRepository.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ledgerservice/src/main/kotlin/org/example/ledgerservice/ledger/adapter/out/persistence/repository/LedgerEntryRepository.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ledgerservice/src/main/kotlin/org/example/ledgerservice/ledger/adapter/out/persistence/repository/LedgerTransactionRepository.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ledgerservice/src/main/kotlin/org/example/ledgerservice/ledger/adapter/out/persistence/repository/PaymentOrderRepository.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ledgerservice/src/main/kotlin/org/example/ledgerservice/ledger/application/port/in/DoubleLedgerEntryRecordUseCase.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ledgerservice/src/main/kotlin/org/example/ledgerservice/ledger/application/port/out/DuplicateMessageFilterPort.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ledgerservice/src/main/kotlin/org/example/ledgerservice/ledger/application/port/out/LoadAccountPort.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ledgerservice/src/main/kotlin/org/example/ledgerservice/ledger/application/port/out/LoadPaymentOrderPort.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ledgerservice/src/main/kotlin/org/example/ledgerservice/ledger/application/port/out/SaveDoubleLedgerEntryPort.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ledgerservice/src/main/kotlin/org/example/ledgerservice/ledger/application/service/DoubleLedgerEntryRecordService.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ledgerservice/src/main/kotlin/org/example/ledgerservice/ledger/domain/Account.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ledgerservice/src/main/kotlin/org/example/ledgerservice/ledger/domain/DoubleAccountsForLedger.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ledgerservice/src/main/kotlin/org/example/ledgerservice/ledger/domain/DoubleLedgerEntry.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ledgerservice/src/main/kotlin/org/example/ledgerservice/ledger/domain/FinanceType.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ledgerservice/src/main/kotlin/org/example/ledgerservice/ledger/domain/Item.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ledgerservice/src/main/kotlin/org/example/ledgerservice/ledger/domain/Ledger.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ledgerservice/src/main/kotlin/org/example/ledgerservice/ledger/domain/LedgerEntry.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ledgerservice/src/main/kotlin/org/example/ledgerservice/ledger/domain/LedgerEventMessage.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ledgerservice/src/main/kotlin/org/example/ledgerservice/ledger/domain/LedgerTransaction.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ledgerservice/src/main/kotlin/org/example/ledgerservice/ledger/domain/PaymentEventMessage.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ledgerservice/src/main/kotlin/org/example/ledgerservice/ledger/domain/PaymentOrder.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ledgerservice/src/main/kotlin/org/example/ledgerservice/ledger/domain/ReferenceType.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ledgerservice/src/main/resources/application.yml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ledgerservice/src/main/resources/schema.sql" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ledgerservice/src/main/resources/trigger.sql" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ledgerservice/src/test/kotlin/org/example/ledgerservice/LedgerserviceApplicationTests.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ledgerservice/src/test/kotlin/org/example/ledgerservice/ledger/application/service/DoubleLedgerEntryRecordServiceTest.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/paymentservice/src/main/kotlin/org/example/paymentservice/payment/adapter/in/stream/LedgerEventMessageHandler.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/paymentservice/src/main/kotlin/org/example/paymentservice/payment/adapter/in/stream/WalletEventMessageHandler.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/paymentservice/src/main/kotlin/org/example/paymentservice/payment/application/port/in/PaymentCompletetUseCase.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/paymentservice/src/main/kotlin/org/example/paymentservice/payment/application/port/out/LoadPaymentPort.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/paymentservice/src/main/kotlin/org/example/paymentservice/payment/application/port/out/PaymentCompletePort.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/paymentservice/src/main/kotlin/org/example/paymentservice/payment/application/service/PaymentCompleteService.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/paymentservice/src/main/kotlin/org/example/paymentservice/payment/domain/LedgerEventMessage.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/paymentservice/src/main/kotlin/org/example/paymentservice/payment/domain/WalletEventMessage.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/paymentservice/src/main/resources/trigger.sql" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/paymentservice/src/test/kotlin/org/example/paymentservice/payment/application/service/PaymentCompleteServiceTest.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/paymentservice/src/main/kotlin/org/example/paymentservice/payment/adapter/out/persistent/PaymentPersistentAdapter.kt" beforeDir="false" afterPath="$PROJECT_DIR$/paymentservice/src/main/kotlin/org/example/paymentservice/payment/adapter/out/persistent/PaymentCompletePersistentAdapter.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/paymentservice/src/main/kotlin/org/example/paymentservice/payment/adapter/out/persistent/repository/PaymentRepository.kt" beforeDir="false" afterPath="$PROJECT_DIR$/paymentservice/src/main/kotlin/org/example/paymentservice/payment/adapter/out/persistent/repository/PaymentRepository.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/paymentservice/src/main/kotlin/org/example/paymentservice/payment/adapter/out/persistent/repository/R2DBCPaymentRepository.kt" beforeDir="false" afterPath="$PROJECT_DIR$/paymentservice/src/main/kotlin/org/example/paymentservice/payment/adapter/out/persistent/repository/R2DBCPaymentRepository.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/paymentservice/src/main/kotlin/org/example/paymentservice/payment/adapter/out/web/product/client/MockProductClient.kt" beforeDir="false" afterPath="$PROJECT_DIR$/paymentservice/src/main/kotlin/org/example/paymentservice/payment/adapter/out/web/product/client/MockProductClient.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/paymentservice/src/main/kotlin/org/example/paymentservice/payment/application/service/CheckOutService.kt" beforeDir="false" afterPath="$PROJECT_DIR$/paymentservice/src/main/kotlin/org/example/paymentservice/payment/application/service/CheckOutService.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/paymentservice/src/main/kotlin/org/example/paymentservice/payment/domain/PaymentEvent.kt" beforeDir="false" afterPath="$PROJECT_DIR$/paymentservice/src/main/kotlin/org/example/paymentservice/payment/domain/PaymentEvent.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/paymentservice/src/main/kotlin/org/example/paymentservice/payment/domain/PaymentEventMessage.kt" beforeDir="false" afterPath="$PROJECT_DIR$/paymentservice/src/main/kotlin/org/example/paymentservice/payment/domain/PaymentEventMessage.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/paymentservice/src/main/kotlin/org/example/paymentservice/payment/domain/PaymentOrder.kt" beforeDir="false" afterPath="$PROJECT_DIR$/paymentservice/src/main/kotlin/org/example/paymentservice/payment/domain/PaymentOrder.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/paymentservice/src/main/kotlin/org/example/paymentservice/payment/domain/Product.kt" beforeDir="false" afterPath="$PROJECT_DIR$/paymentservice/src/main/kotlin/org/example/paymentservice/payment/domain/Product.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/paymentservice/src/main/resources/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/paymentservice/src/main/resources/application.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/paymentservice/src/test/kotlin/org/example/paymentservice/payment/application/service/PaymentConfirmServiceTest.kt" beforeDir="false" afterPath="$PROJECT_DIR$/paymentservice/src/test/kotlin/org/example/paymentservice/payment/application/service/PaymentConfirmServiceTest.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/paymentservice/src/test/kotlin/org/example/paymentservice/payment/test/R2DBCPaymentDatabaseHelper.kt" beforeDir="false" afterPath="$PROJECT_DIR$/paymentservice/src/test/kotlin/org/example/paymentservice/payment/test/R2DBCPaymentDatabaseHelper.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/walletservice/src/main/resources/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/walletservice/src/main/resources/application.yml" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="ExternalProjectsData">
+    <projectState path="$PROJECT_DIR$">
+      <ProjectState />
+    </projectState>
+    <projectState path="$PROJECT_DIR$/ledgerservice">
+      <ProjectState />
+    </projectState>
+    <projectState path="$PROJECT_DIR$/paymentservice">
+      <ProjectState />
+    </projectState>
+    <projectState path="$PROJECT_DIR$/walletservice">
+      <ProjectState />
+    </projectState>
+  </component>
+  <component name="ExternalProjectsManager">
+    <system id="GRADLE">
+      <state>
+        <task path="$PROJECT_DIR$">
+          <activation />
+        </task>
+        <task path="$PROJECT_DIR$/paymentservice">
+          <activation />
+        </task>
+        <projects_view>
+          <tree_state>
+            <expand>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="payment-service" type="f1a62948:ProjectNode" />
+              </path>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="payment-service" type="f1a62948:ProjectNode" />
+                <item name="Tasks" type="e4a08cd1:TasksNode" />
+              </path>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="payment-service" type="f1a62948:ProjectNode" />
+                <item name="Tasks" type="e4a08cd1:TasksNode" />
+                <item name="verification" type="c8890929:TasksNode$1" />
+              </path>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="payment-service" type="f1a62948:ProjectNode" />
+                <item name="Dependencies" type="6de06a37:ExternalSystemViewDefaultContributor$MyDependenciesNode" />
+              </path>
+            </expand>
+            <select />
+          </tree_state>
+        </projects_view>
+      </state>
+    </system>
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Interface" />
+        <option value="Kotlin Data Class" />
+        <option value="Kotlin Annotation" />
+        <option value="Kotlin Object" />
+        <option value="Class" />
+        <option value="Kotlin Enum" />
+        <option value="Kotlin Class" />
+        <option value="Kotlin Interface" />
+        <option value="JUnit5 Test Class" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;Kangchanghwan&quot;
+  }
+}</component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/Kangchanghwan/payment-service.git&quot;,
+    &quot;accountId&quot;: &quot;3043f5b1-8793-4416-8996-a744c7647aa2&quot;
+  }
+}</component>
+  <component name="KotlinCodeInsightWorkspaceSettings">
+    <option name="optimizeImportsOnTheFly" value="true" />
+  </component>
+  <component name="KubernetesApiPersistence">{}</component>
+  <component name="KubernetesApiProvider">{
+  &quot;isMigrated&quot;: true
+}</component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 3
+}</component>
+  <component name="ProjectId" id="2flPwYdToQzDxwOGltzknr0eySE" />
+  <component name="ProjectLevelVcsManager">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
+  <component name="ProjectViewState">
+    <option name="flattenModules" value="true" />
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;ASKED_ADD_EXTERNAL_FILES&quot;: &quot;true&quot;,
+    &quot;Docker.docker-compose.yml: Compose Deployment.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.Build ledgerservice.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.Build payment-service.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.Build paymentservice.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.Build walletservice.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.CheckOutServiceTest.should fail to save PaymentEvent and PaymentOrder when trying to save for the second time.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.CheckOutServiceTest.should save PaymentEvent and PaymentOrder successfully.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.DoubleLedgerEntryRecordServiceTest.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.Download Sources.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.JpaWalletRepositoryTest.should update the balance of wallet successfully when execute the updated command at the same time.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.PaymentCompleteServiceTest.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.PaymentCompleteServiceTest.should update payment given a LedgerEventMessage and WalletEventMessage.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.PaymentCompleteServiceTest.should update payment given a LedgerEventMessage.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.PaymentCompleteServiceTest.should update payment given a WalletEventMessage.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.PaymentConfirmServiceTest.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.PaymentConfirmServiceTest.should be marked as SUCCESS if Payment Confirmation fail on PSP.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.PaymentConfirmServiceTest.should be marked as SUCCESS if Payment Confirmation success in PSP.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.PaymentConfirmServiceTest.should be marked as SUCCESS if Payment confirmation fails due to an unknown exception.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.PaymentEventMessageRelayServiceTest.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.TossPaymentExecutorTest.should handle various TossPaymentError scenarios.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.payment-service [check].executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.payment-service [test].executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.PaymentConfirmServiceTest.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.PaymentConfirmServiceTest.should handle PSPConfirmationException.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.PaymentConfirmServiceTest.should handle PaymentValidationException.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.PaymentConfirmServiceTest.should send the event message to the external message system after the payment confirmation has been successful.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.PaymentEventMessageRelayServiceTest.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.PaymentEventMessageRelayServiceTest.should dispatch external message system.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.PaymentEventMessageSenderTest.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.PaymentRecoveryServiceTest.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.PaymentRecoveryServiceTest.should fail recovery when an unknown exception occurs.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.PaymentRecoveryServiceTest.should recovery payments.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.TossPaymentExecutorTest.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.TossPaymentExecutorTest.should handle various TossPaymentError scenarios.executor&quot;: &quot;Run&quot;,
+    &quot;RequestMappingsPanelOrder0&quot;: &quot;0&quot;,
+    &quot;RequestMappingsPanelOrder1&quot;: &quot;1&quot;,
+    &quot;RequestMappingsPanelWidth0&quot;: &quot;75&quot;,
+    &quot;RequestMappingsPanelWidth1&quot;: &quot;75&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;Spring Boot.LedgerserviceApplication.executor&quot;: &quot;Run&quot;,
+    &quot;Spring Boot.PaymentServiceApplication.executor&quot;: &quot;Run&quot;,
+    &quot;Spring Boot.WalletserviceApplication.executor&quot;: &quot;Run&quot;,
+    &quot;com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrary&quot;: &quot;JUnit5&quot;,
+    &quot;com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrarySuperClass.JUnit5&quot;: &quot;&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;jdk.selected.JAVA_MODULE&quot;: &quot;openjdk-21&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/Users/gangchanghwan/Documents/practice/payment-service/ledgerservice/src/main/kotlin/org/example/ledgerservice/ledger/adapter/out/persistence/entity&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
+    &quot;run.configurations.included.in.services&quot;: &quot;true&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;reference.settingsdialog.project.gradle&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  },
+  &quot;keyToStringList&quot;: {
+    &quot;DatabaseDriversLRU&quot;: [
+      &quot;mysql&quot;
+    ],
+    &quot;kotlin-gradle-user-dirs&quot;: [
+      &quot;/Users/gangchanghwan/.gradle&quot;
+    ]
+  }
+}</component>
+  <component name="ReactorSettings">
+    <option name="notificationShown" value="true" />
+  </component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/ledgerservice/src/main/kotlin/org/example/ledgerservice/ledger/adapter/out/persistence/entity" />
+      <recent name="$PROJECT_DIR$/ledgerservice/src/main/kotlin/org/example/ledgerservice/ledger/adapter/out/persistence/repository" />
+      <recent name="$PROJECT_DIR$/ledgerservice/src/main/kotlin/org/example/ledgerservice/ledger/domain" />
+      <recent name="$PROJECT_DIR$/ledgerservice/src/main/kotlin/org/example/ledgerservice/common" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$" />
+      <recent name="$PROJECT_DIR$/src/main/resources/static" />
+    </key>
+    <key name="CreateTestDialog.Recents.Supers">
+      <recent name="" />
+    </key>
+    <key name="CreateKotlinClassDialog.RecentsKey">
+      <recent name="org.example.ledgerservice.ledger.adapter.out.persistence.entity" />
+      <recent name="org.example.ledgerservice.ledger.domain" />
+      <recent name="org.example.paymentservice.payment.adapter.out.persistent.repository" />
+      <recent name="org.example.paymentservice.payment.domain" />
+      <recent name="org.example.paymentservice.payment.application.port.in" />
+    </key>
+    <key name="MoveKotlinTopLevelDeclarationsDialog.RECENTS_KEY">
+      <recent name="org.example.paymentservice.payment.domain" />
+    </key>
+    <key name="CreateTestDialog.RecentsKey">
+      <recent name="org.example.paymentservice.payment.application.service" />
+      <recent name="org.example.ledgerservice.ledger.application.service" />
+      <recent name="org.example.walletservice.wallet.adapter.out.persistence.repsitory" />
+      <recent name="org.example.paymentservice.payment.adapter.out.stream" />
+      <recent name="org.example.paymentservice.payment.adapter.out.web.toss.executor" />
+    </key>
+    <key name="CopyKotlinDeclarationDialog.RECENTS_KEY">
+      <recent name="org.example.ledgerservice.ledger.adapter.out.persistence" />
+      <recent name="org.example.ledgerservice.ledger.domain" />
+      <recent name="org.example.ledgerservice.ledger.application.port.out" />
+      <recent name="org.example.ledgerservice.ledger.adapter.in.stream" />
+      <recent name="org.example.paymentservice.payment.adapter.out.persistent.exception" />
+    </key>
+  </component>
+  <component name="RunDashboard">
+    <option name="configurationTypes">
+      <set>
+        <option value="MicronautRunConfigurationType" />
+        <option value="QuarkusRunConfigurationType" />
+        <option value="SpringBootApplicationConfigurationType" />
+      </set>
+    </option>
+  </component>
+  <component name="RunManager" selected="Spring Boot.PaymentServiceApplication">
+    <configuration name="PaymentCompleteServiceTest" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$/paymentservice" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" value="" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value=":test" />
+            <option value="--tests" />
+            <option value="&quot;PaymentCompleteServiceTest&quot;" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>false</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <RunAsTest>true</RunAsTest>
+      <method v="2" />
+    </configuration>
+    <configuration name="PaymentCompleteServiceTest.should update payment given a LedgerEventMessage and WalletEventMessage" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$/paymentservice" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" value="" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value=":test" />
+            <option value="--tests" />
+            <option value="&quot;PaymentCompleteServiceTest.should update payment given a LedgerEventMessage and WalletEventMessage&quot;" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>false</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <RunAsTest>true</RunAsTest>
+      <method v="2" />
+    </configuration>
+    <configuration name="PaymentCompleteServiceTest.should update payment given a LedgerEventMessage" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$/paymentservice" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" value="" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value=":test" />
+            <option value="--tests" />
+            <option value="&quot;PaymentCompleteServiceTest.should update payment given a LedgerEventMessage&quot;" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>false</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <RunAsTest>true</RunAsTest>
+      <method v="2" />
+    </configuration>
+    <configuration name="PaymentCompleteServiceTest.should update payment given a WalletEventMessage" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$/paymentservice" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" value="" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value=":test" />
+            <option value="--tests" />
+            <option value="&quot;PaymentCompleteServiceTest.should update payment given a WalletEventMessage&quot;" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>false</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <RunAsTest>true</RunAsTest>
+      <method v="2" />
+    </configuration>
+    <configuration name="LedgerserviceApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
+      <module name="ledgerservice.main" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="org.example.ledgerservice.LedgerserviceApplication" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="PaymentServiceApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
+      <module name="payment-service.main" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="org.example.paymentservice.PaymentServiceApplication" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="WalletserviceApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" temporary="true" nameIsGenerated="true">
+      <module name="walletservice.main" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="org.example.walletservice.WalletserviceApplication" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="org.example.walletservice.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration default="true" type="docker-deploy" factoryName="docker-compose.yml" temporary="true">
+      <deployment type="docker-compose.yml">
+        <settings />
+      </deployment>
+      <method v="2" />
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Spring Boot.WalletserviceApplication" />
+        <item itemvalue="Gradle.PaymentCompleteServiceTest.should update payment given a LedgerEventMessage and WalletEventMessage" />
+        <item itemvalue="Gradle.PaymentCompleteServiceTest.should update payment given a LedgerEventMessage" />
+        <item itemvalue="Gradle.PaymentCompleteServiceTest" />
+        <item itemvalue="Gradle.PaymentCompleteServiceTest.should update payment given a WalletEventMessage" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-jdk-9f38398b9061-18abd8497189-intellij.indexing.shared.core-IU-241.14494.240" />
+        <option value="bundled-js-predefined-1d06a55b98c1-74d2a5396914-JavaScript-IU-241.14494.240" />
+      </set>
+    </attachedChunks>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="3b561aca-9e0f-4fcc-9ec6-385ac67ed2e2" name="Changes" comment="" />
+      <created>1714372930264</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1714372930264</updated>
+      <workItem from="1714372931876" duration="6337000" />
+      <workItem from="1714435849681" duration="99000" />
+      <workItem from="1714629916648" duration="4453000" />
+      <workItem from="1715059830461" duration="12902000" />
+      <workItem from="1715222623800" duration="16714000" />
+      <workItem from="1715255992738" duration="12773000" />
+      <workItem from="1715919351035" duration="7467000" />
+      <workItem from="1717742489621" duration="403000" />
+      <workItem from="1722320104947" duration="706000" />
+      <workItem from="1722605202545" duration="428000" />
+      <workItem from="1724655046897" duration="27217000" />
+      <workItem from="1724892486262" duration="4195000" />
+      <workItem from="1724921240615" duration="14000" />
+      <workItem from="1724921256758" duration="4080000" />
+      <workItem from="1724933208054" duration="9675000" />
+      <workItem from="1724977623901" duration="13693000" />
+      <workItem from="1725072242419" duration="2614000" />
+      <workItem from="1725274110851" duration="209000" />
+    </task>
+    <task id="LOCAL-00001" summary="feat: toss api 연동">
+      <option name="closed" value="true" />
+      <created>1714629973471</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1714629973471</updated>
+    </task>
+    <task id="LOCAL-00002" summary="feat: check api 기능 추가 및 테스트 코드 작성">
+      <option name="closed" value="true" />
+      <created>1715078164374</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1715078164374</updated>
+    </task>
+    <task id="LOCAL-00003" summary="feat: 결제 승인처리 완료">
+      <option name="closed" value="true" />
+      <created>1715256022232</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1715256022232</updated>
+    </task>
+    <task id="LOCAL-00004" summary="feat: 결제 취소시 에러 핸들링">
+      <option name="closed" value="true" />
+      <created>1715856692450</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1715856692451</updated>
+    </task>
+    <task id="LOCAL-00005" summary="feat: 결제 복구 처리 기능">
+      <option name="closed" value="true" />
+      <created>1715928616635</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1715928616635</updated>
+    </task>
+    <task id="LOCAL-00006" summary="feat: 결제 승인 메시지 발행 (feat: Transactional Outbox Pattern, Apache Kafka)">
+      <option name="closed" value="true" />
+      <created>1724822176065</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1724822176065</updated>
+    </task>
+    <task id="LOCAL-00007" summary="feat: walletservice 구축">
+      <option name="closed" value="true" />
+      <created>1724920936331</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1724920936331</updated>
+    </task>
+    <task id="LOCAL-00008" summary="feat: Wallet Service 동시성 제어">
+      <option name="closed" value="true" />
+      <created>1724933243395</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1724933243395</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
+    <MESSAGE value="feat: toss api 연동" />
+    <MESSAGE value="feat: check api 기능 추가 및 테스트 코드 작성" />
+    <MESSAGE value="feat: 결제 승인처리 완료" />
+    <MESSAGE value="feat: 결제 취소시 에러 핸들링" />
+    <MESSAGE value="feat: 결제 복구 처리 기능" />
+    <MESSAGE value="feat: 결제 승인 메시지 발행 (feat: Transactional Outbox Pattern, Apache Kafka)" />
+    <MESSAGE value="feat: walletservice 구축" />
+    <MESSAGE value="feat: Wallet Service 동시성 제어" />
+    <option name="LAST_COMMIT_MESSAGE" value="feat: Wallet Service 동시성 제어" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="kotlin-function">
+          <url>file://$PROJECT_DIR$/paymentservice/src/main/kotlin/org/example/paymentservice/payment/domain/PaymentConfirmationResult.kt</url>
+          <line>2</line>
+          <properties class="org.example.paymentservice.payment.domain.PaymentConfirmationResult">
+            <option name="EMULATED" value="true" />
+            <option name="WATCH_EXIT" value="false" />
+          </properties>
+          <option name="timeStamp" value="1" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
+  </component>
+  <component name="XSLT-Support.FileAssociations.UIState">
+    <expand />
+    <select />
+  </component>
+</project>

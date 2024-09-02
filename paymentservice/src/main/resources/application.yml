@@ -1,0 +1,75 @@
+spring:
+  r2dbc:
+    username: root
+    password: password
+    url: r2dbc:mysql://localhost:3306/test
+
+
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+
+
+  thymeleaf:
+    cache: false
+  cloud:
+    stream:
+      kafka:
+        binder:
+          brokers: localhost:9092
+          configuration:
+            client:
+              dns:
+                lookup: use_all_dns_ips
+          required-acks: all
+          auto-create-topics: false
+        bindings:
+          send-out-0:
+            producer:
+              record-metadata-channel: payment-result
+
+          wallet-in-0:
+            consumer:
+              configuration:
+                isolation:
+                  level: read_committed
+              enable-dlq: true
+              dlq-name: wallet_payment_dlq
+
+          ledger-in-0:
+            consumer:
+              configuration:
+                isolation:
+                  level: read_committed
+              enable-dlq: true
+              dlq-name: ledger_payment_dlq
+
+      bindings:
+        send-out-0:
+          destination: payment
+          group: payment-service
+
+        wallet-in-0:
+          destination: wallet
+          group: payment-service
+
+        ledger-in-0:
+          destination: ledger
+          group: payment-service
+    function:
+      definition: send;wallet;ledger
+
+
+logging:
+  level:
+    org:
+      springframework:
+        web: DEBUG
+        r2dbc: DEBUG
+        transaction: DEBUG
+
+PSP:
+  toss:
+    secretKey: test_sk_oEjb0gm23PY6X4mwjZ9kVpGwBJn5
+    url: https://api.tosspayments.com
+
